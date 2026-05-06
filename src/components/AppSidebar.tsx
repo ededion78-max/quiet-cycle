@@ -63,7 +63,7 @@ export function AppSidebar() {
         </div>
 
         {/* Navigation */}
-        <SidebarGroup defaultOpen>
+        <SidebarGroup>
           <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground/70">
             Menu
           </SidebarGroupLabel>
