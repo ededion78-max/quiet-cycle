@@ -146,7 +146,7 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
             return (
               <button
                 key={s.key}
-                onClick={() => update({ [s.key]: !active } as unknown as Partial<DayLog>)}
+                onClick={() => update({ [s.key]: !active })}
                 className={cn(
                   "py-2.5 rounded-xl text-[10px] font-medium transition-all border flex flex-col items-center gap-1",
                   active
