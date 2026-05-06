@@ -1,28 +1,18 @@
 /**
- * PeriodCalendar - Interactive monthly calendar
- * Users can click dates to mark period start/end days.
- * Shows period days, predicted days, and ovulation window.
+ * PeriodCalendar - Interactive monthly calendar with i18n support
  */
 
 import { useState, useMemo } from "react";
 import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-  isSameMonth,
-  isSameDay,
-  addMonths,
-  subMonths,
+  format, startOfMonth, endOfMonth, startOfWeek, endOfWeek,
+  addDays, isSameMonth, isSameDay, addMonths, subMonths,
 } from "date-fns";
-import { sq } from "date-fns/locale/sq";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { DayLog, Prediction } from "@/lib/period-tracker";
 import { isOvulationDay, isPredictedPeriodDay } from "@/lib/period-tracker";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
 interface PeriodCalendarProps {
   logs: DayLog[];
@@ -32,16 +22,10 @@ interface PeriodCalendarProps {
   selectedDate: Date | null;
 }
 
-export function PeriodCalendar({
-  logs,
-  prediction,
-  onTogglePeriod,
-  onSelectDate,
-  selectedDate,
-}: PeriodCalendarProps) {
+export function PeriodCalendar({ logs, prediction, onTogglePeriod, onSelectDate, selectedDate }: PeriodCalendarProps) {
+  const { t } = useI18n();
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // Build calendar grid
   const weeks = useMemo(() => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
@@ -61,7 +45,7 @@ export function PeriodCalendar({
     return result;
   }, [currentMonth]);
 
-  const dayNames = ["Hë", "Ma", "Më", "En", "Pr", "Sh", "Di"];
+  const dayNames = [t.mon, t.tue, t.wed, t.thu, t.fri, t.sat, t.sun];
 
   const getLogForDate = (date: Date) =>
     logs.find((l) => l.date === format(date, "yyyy-MM-dd"));
@@ -87,37 +71,37 @@ export function PeriodCalendar({
     );
   };
 
+  // Month names in current language
+  const monthNames: Record<string, string[]> = {
+    en: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    sq: ["Janar","Shkurt","Mars","Prill","Maj","Qershor","Korrik","Gusht","Shtator","Tetor","Nëntor","Dhjetor"],
+    es: ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+    fr: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],
+    de: ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],
+    tr: ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],
+  };
+
+  const { lang } = useI18n();
+  const monthLabel = `${(monthNames[lang] || monthNames.en)[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
+
   return (
     <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
-      {/* Month navigation */}
       <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-          className="p-2 rounded-full hover:bg-muted transition-colors"
-        >
+        <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2 rounded-full hover:bg-muted transition-colors">
           <ChevronLeft className="w-5 h-5 text-muted-foreground" />
         </button>
-        <h3 className="text-lg font-semibold text-foreground capitalize">
-          {format(currentMonth, "MMMM yyyy", { locale: sq })}
-        </h3>
-        <button
-          onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-          className="p-2 rounded-full hover:bg-muted transition-colors"
-        >
+        <h3 className="text-lg font-semibold text-foreground capitalize">{monthLabel}</h3>
+        <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-2 rounded-full hover:bg-muted transition-colors">
           <ChevronRight className="w-5 h-5 text-muted-foreground" />
         </button>
       </div>
 
-      {/* Day names */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {dayNames.map((name) => (
-          <div key={name} className="text-center text-xs font-medium text-muted-foreground py-1">
-            {name}
-          </div>
+          <div key={name} className="text-center text-xs font-medium text-muted-foreground py-1">{name}</div>
         ))}
       </div>
 
-      {/* Calendar grid */}
       <AnimatePresence mode="wait">
         <motion.div
           key={format(currentMonth, "yyyy-MM")}
@@ -132,13 +116,9 @@ export function PeriodCalendar({
                 <button
                   key={day.toISOString()}
                   className={getDayClasses(day)}
-                  onClick={() => {
-                    onSelectDate(day);
-                    onTogglePeriod(day);
-                  }}
+                  onClick={() => { onSelectDate(day); onTogglePeriod(day); }}
                 >
                   {format(day, "d")}
-                  {/* Ovulation dot indicator */}
                   {isOvulationDay(day, prediction) && !getLogForDate(day)?.isPeriod && (
                     <span className="absolute bottom-0.5 w-1.5 h-1.5 rounded-full bg-ovulation" />
                   )}
@@ -149,19 +129,18 @@ export function PeriodCalendar({
         </motion.div>
       </AnimatePresence>
 
-      {/* Legend */}
       <div className="flex gap-4 mt-4 justify-center text-xs text-muted-foreground">
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-full bg-period-active" />
-          Perioda
+          {t.period}
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-full bg-period-predicted" />
-          Parashikim
+          {t.prediction}
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-full bg-ovulation" />
-          Ovulim
+          {t.ovulation}
         </div>
       </div>
     </div>
