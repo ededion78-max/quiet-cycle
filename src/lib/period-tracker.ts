@@ -20,6 +20,11 @@ export interface DayLog {
   pain?: boolean;
   mood?: MoodType;
   notes?: string;
+  energy?: boolean;
+  bloating?: boolean;
+  headache?: boolean;
+  cravings?: boolean;
+  [key: string]: string | boolean | undefined;
 }
 
 export interface CycleData {
