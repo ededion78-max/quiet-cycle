@@ -142,7 +142,7 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
             { key: "cravings", icon: Cookie, label: t.cravings },
           ].map((s) => {
             const Icon = s.icon;
-            const active = (currentLog as Record<string, unknown>)[s.key] === true;
+            const active = (currentLog as unknown as Record<string, unknown>)[s.key] === true;
             return (
               <button
                 key={s.key}
