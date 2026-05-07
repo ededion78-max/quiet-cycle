@@ -112,7 +112,7 @@ function NotesPage() {
             exit={{ opacity: 0, height: 0 }}
             className="mb-6 overflow-hidden"
           >
-            <div className="bg-card rounded-2xl p-5 border border-border">
+            <div className="card-premium p-5">
               <textarea
                 value={newText}
                 onChange={(e) => setNewText(e.target.value)}
@@ -152,7 +152,7 @@ function NotesPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="bg-card rounded-2xl p-4 border border-border group hover:shadow-sm transition-shadow"
+              className="card-premium p-4 group"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
