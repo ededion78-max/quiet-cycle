@@ -1,6 +1,5 @@
 /**
- * SymptomPanel - Enhanced symptom logging with i18n
- * Flow, pain, mood, energy, bloating, headache, cravings
+ * SymptomPanel - Premium symptom logging
  */
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,7 +17,6 @@ interface SymptomPanelProps {
 
 export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelProps) {
   const { t } = useI18n();
-
   if (!selectedDate) return null;
 
   const dateKey = format(selectedDate, "yyyy-MM-dd");
@@ -44,6 +42,13 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
     { value: "irritable", label: t.irritable, icon: Angry },
   ];
 
+  const btnClass = (active: boolean) => cn(
+    "flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all",
+    active
+      ? "gradient-primary text-primary-foreground shadow-md shadow-primary/20"
+      : "bg-muted/50 text-muted-foreground border border-border hover:bg-muted"
+  );
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -51,30 +56,21 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        className="bg-card rounded-2xl p-5 shadow-sm border border-border"
+        className="card-premium p-5"
       >
-        <h3 className="text-sm font-semibold text-foreground mb-4">
+        <h3 className="text-sm font-bold text-foreground mb-4 tracking-tight">
           {t.symptoms} — {format(selectedDate, "d MMMM yyyy")}
         </h3>
 
         {/* Flow */}
         <div className="mb-4">
-          <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1.5">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60 mb-2 flex items-center gap-1.5">
             <Droplets className="w-3.5 h-3.5" /> {t.flow}
           </p>
           <div className="flex gap-2">
             {flowOptions.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => setFlow(opt.value)}
-                className={cn(
-                  "flex-1 py-2 px-3 rounded-xl text-xs font-medium transition-all border",
-                  currentLog.flow === opt.value
-                    ? "bg-symptom-selected text-primary-foreground border-symptom-selected"
-                    : "bg-background text-muted-foreground border-border hover:bg-symptom-hover"
-                )}
-              >
-                <span className="flex items-center justify-center gap-1">
+              <button key={opt.value} onClick={() => setFlow(opt.value)} className={btnClass(currentLog.flow === opt.value)}>
+                <span className="flex items-center justify-center gap-0.5">
                   {Array.from({ length: opt.drops }).map((_, i) => (
                     <Droplets key={i} className="w-3 h-3" />
                   ))}
@@ -87,21 +83,12 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
 
         {/* Pain */}
         <div className="mb-4">
-          <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1.5">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60 mb-2 flex items-center gap-1.5">
             <ThermometerSun className="w-3.5 h-3.5" /> {t.pain}
           </p>
           <div className="flex gap-2">
             {[{ value: true, label: t.yes }, { value: false, label: t.no }].map((opt) => (
-              <button
-                key={String(opt.value)}
-                onClick={togglePain}
-                className={cn(
-                  "flex-1 py-2 px-3 rounded-xl text-xs font-medium transition-all border",
-                  currentLog.pain === opt.value
-                    ? "bg-symptom-selected text-primary-foreground border-symptom-selected"
-                    : "bg-background text-muted-foreground border-border hover:bg-symptom-hover"
-                )}
-              >
+              <button key={String(opt.value)} onClick={togglePain} className={btnClass(currentLog.pain === opt.value)}>
                 {opt.label}
               </button>
             ))}
@@ -110,7 +97,7 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
 
         {/* Mood */}
         <div className="mb-4">
-          <p className="text-xs text-muted-foreground mb-2">{t.mood}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60 mb-2">{t.mood}</p>
           <div className="flex gap-2">
             {moodOptions.map((opt) => {
               const Icon = opt.icon;
@@ -118,12 +105,7 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
                 <button
                   key={opt.value}
                   onClick={() => setMood(opt.value)}
-                  className={cn(
-                    "flex-1 py-2 px-3 rounded-xl text-xs font-medium transition-all border flex flex-col items-center gap-1",
-                    currentLog.mood === opt.value
-                      ? "bg-symptom-selected text-primary-foreground border-symptom-selected"
-                      : "bg-background text-muted-foreground border-border hover:bg-symptom-hover"
-                  )}
+                  className={cn(btnClass(currentLog.mood === opt.value), "flex flex-col items-center gap-1")}
                 >
                   <Icon className="w-5 h-5" />
                   {opt.label}
@@ -133,7 +115,7 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
           </div>
         </div>
 
-        {/* Extra symptoms row */}
+        {/* Extra symptoms */}
         <div className="grid grid-cols-4 gap-2">
           {[
             { key: "energy", icon: Zap, label: t.energy },
@@ -148,10 +130,10 @@ export function SymptomPanel({ selectedDate, log, onUpdateLog }: SymptomPanelPro
                 key={s.key}
                 onClick={() => update({ [s.key]: !active })}
                 className={cn(
-                  "py-2.5 rounded-xl text-[10px] font-medium transition-all border flex flex-col items-center gap-1",
+                  "py-2.5 rounded-xl text-[10px] font-semibold transition-all flex flex-col items-center gap-1",
                   active
-                    ? "bg-symptom-selected text-primary-foreground border-symptom-selected"
-                    : "bg-background text-muted-foreground border-border hover:bg-symptom-hover"
+                    ? "gradient-primary text-primary-foreground shadow-md shadow-primary/20"
+                    : "bg-muted/50 text-muted-foreground border border-border hover:bg-muted"
                 )}
               >
                 <Icon className="w-4 h-4" />

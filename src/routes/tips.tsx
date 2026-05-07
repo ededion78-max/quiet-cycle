@@ -56,7 +56,7 @@ function TipsPage() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
-              className="bg-card rounded-2xl p-5 border border-border shadow-sm hover:shadow-md transition-shadow"
+              className="card-premium p-5"
             >
               <div className="flex items-start gap-4">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tip.color}`}>
