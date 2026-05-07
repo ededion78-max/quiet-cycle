@@ -83,12 +83,12 @@ function AnalyticsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="grid grid-cols-2 gap-4"
           >
-            <div className="bg-card rounded-2xl p-5 border border-border text-center">
+             <div className="card-premium p-5 text-center">
               <TrendingUp className="w-6 h-6 text-primary mx-auto mb-2" />
               <p className="text-2xl font-bold text-foreground">{avgLength}</p>
               <p className="text-xs text-muted-foreground">{t.avgCycleLength}</p>
             </div>
-            <div className="bg-card rounded-2xl p-5 border border-border text-center">
+            <div className="card-premium p-5 text-center">
               <Calendar className="w-6 h-6 text-primary mx-auto mb-2" />
               <p className="text-2xl font-bold text-foreground">{data.cycleStarts.length}</p>
               <p className="text-xs text-muted-foreground">{t.totalCyclesLogged}</p>
@@ -101,7 +101,7 @@ function AnalyticsPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-card rounded-2xl p-5 border border-border"
+              className="card-premium p-5"
             >
               <h3 className="text-sm font-semibold text-foreground mb-4">{t.cycleLengthTrend}</h3>
               <ResponsiveContainer width="100%" height={200}>
@@ -124,7 +124,7 @@ function AnalyticsPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-card rounded-2xl p-5 border border-border"
+              className="card-premium p-5"
             >
               <h3 className="text-sm font-semibold text-foreground mb-4">{t.symptomFrequency}</h3>
               <ResponsiveContainer width="100%" height={200}>
