@@ -1,22 +1,15 @@
 /**
- * Period Tracker - Main Page
- * Combines CycleRing countdown, interactive calendar, tracking modes,
- * condition selector, and enhanced symptom panel.
+ * Period Tracker - Main Page (Premium Design)
  */
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useCallback, useEffect } from "react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { Heart, Baby, Activity, Stethoscope } from "lucide-react";
+import { Heart, Baby, Activity, Stethoscope, Sparkles } from "lucide-react";
 import {
-  loadData,
-  saveData,
-  getPrediction,
-  getLogForDate,
-  upsertLog,
-  type CycleData,
-  type DayLog,
+  loadData, saveData, getPrediction, getLogForDate, upsertLog,
+  type CycleData, type DayLog,
 } from "@/lib/period-tracker";
 import { CycleRing } from "@/components/CycleRing";
 import { PeriodCalendar } from "@/components/PeriodCalendar";
@@ -28,7 +21,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "My Cycle — Period Tracker" },
-      { name: "description", content: "Professional menstrual cycle tracking app with predictions, symptom logging, and health insights." },
+      { name: "description", content: "Professional menstrual cycle tracking with predictions, symptom logging, and health insights." },
     ],
   }),
 });
@@ -91,12 +84,25 @@ function PeriodTracker() {
   ];
 
   return (
-    <div className="min-h-full bg-background">
+    <div className="min-h-full gradient-hero">
       <div className="max-w-md mx-auto px-4 py-6 space-y-5">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center pt-2"
+        >
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-semibold mb-2">
+            <Sparkles className="w-3 h-3" />
+            {t.appTitle}
+          </div>
+        </motion.div>
+
         {/* Tracking Mode Selector */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
           className="flex gap-2"
         >
           {modes.map((m) => {
@@ -105,10 +111,10 @@ function PeriodTracker() {
               <button
                 key={m.key}
                 onClick={() => setMode(m.key)}
-                className={`flex-1 py-2.5 px-2 rounded-xl text-[11px] font-medium transition-all border flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2.5 px-2 rounded-2xl text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 ${
                   mode === m.key
-                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                    : "bg-card text-muted-foreground border-border hover:bg-muted/50"
+                    ? "gradient-primary text-primary-foreground shadow-lg shadow-primary/25"
+                    : "bg-card text-muted-foreground border border-border hover:bg-muted/50"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -131,10 +137,10 @@ function PeriodTracker() {
               <button
                 key={c.key}
                 onClick={() => setCondition(c.key)}
-                className={`text-[10px] px-2.5 py-1 rounded-full font-medium transition-all ${
+                className={`text-[10px] px-3 py-1 rounded-full font-semibold transition-all ${
                   condition === c.key
-                    ? "bg-accent text-accent-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    ? "bg-accent text-accent-foreground shadow-sm"
+                    : "bg-muted/60 text-muted-foreground hover:bg-muted"
                 }`}
               >
                 {c.label}
@@ -145,7 +151,7 @@ function PeriodTracker() {
 
         {/* Countdown ring */}
         <motion.section
-          className="flex justify-center py-2"
+          className="flex justify-center py-3"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.15 }}
@@ -181,9 +187,9 @@ function PeriodTracker() {
           />
         </motion.section>
 
-        {/* Tip */}
+        {/* Footer tip */}
         <motion.p
-          className="text-center text-xs text-muted-foreground pt-1 pb-4"
+          className="text-center text-[11px] text-muted-foreground/60 pt-1 pb-6 font-medium"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
