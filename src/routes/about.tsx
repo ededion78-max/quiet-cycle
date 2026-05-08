@@ -45,8 +45,8 @@ function AboutPage() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-10"
       >
-        <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4">
-          <Flower2 className="w-8 h-8 text-primary-foreground" />
+        <div className="w-20 h-20 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg">
+          <img src={appIcon} alt="My Cycle" width={80} height={80} className="w-full h-full object-cover" />
         </div>
         <h1 className="text-2xl font-bold text-foreground">{t.appTitle}</h1>
         <p className="text-sm text-muted-foreground mt-1">{t.aboutSubtitle}</p>
