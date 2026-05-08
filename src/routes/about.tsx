@@ -32,8 +32,10 @@ function AboutPage() {
     { icon: Heart, label: "Symptom & Mood Logging" },
     { icon: BarChart3, label: "Analytics & Insights" },
     { icon: BookOpen, label: "Health Education" },
-    { icon: Globe, label: "Multi-Language Support" },
+    { icon: Globe, label: "56+ Languages" },
     { icon: Smartphone, label: "Works Offline" },
+    { icon: Droplets, label: "Hydration Tracker" },
+    { icon: HelpCircle, label: "FAQ & Guides" },
   ];
 
   return (
