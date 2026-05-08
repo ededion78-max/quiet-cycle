@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  Flower2,
   Shield,
   Calendar,
   BarChart3,
@@ -9,7 +8,10 @@ import {
   BookOpen,
   Globe,
   Smartphone,
+  Droplets,
+  HelpCircle,
 } from "lucide-react";
+import appIcon from "@/assets/app-icon.png";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/about")({
