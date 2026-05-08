@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
-import { BarChart3, TrendingUp, Calendar } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import { BarChart3, TrendingUp, Calendar, Activity, Droplets } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
 import { differenceInDays } from "date-fns";
 import { useI18n } from "@/lib/i18n";
 import { loadData, type CycleData } from "@/lib/period-tracker";
@@ -16,6 +16,8 @@ export const Route = createFileRoute("/analytics")({
     ],
   }),
 });
+
+const CHART_COLORS = ["var(--primary)", "var(--coral-warm)", "var(--ovulation)", "var(--premium-accent)", "var(--chart-4)"];
 
 function AnalyticsPage() {
   const { t } = useI18n();
@@ -42,18 +44,29 @@ function AnalyticsPage() {
     : 28;
 
   const symptomData = useMemo(() => {
-    const counts: Record<string, number> = { pain: 0, happy: 0, sad: 0, irritable: 0, light: 0, medium: 0, heavy: 0 };
+    const counts: Record<string, number> = {};
     data.logs.forEach((log) => {
-      if (log.pain) counts.pain++;
-      if (log.mood) counts[log.mood]++;
-      if (log.flow) counts[log.flow]++;
+      if (log.pain) counts["Pain"] = (counts["Pain"] || 0) + 1;
+      if (log.mood === "happy") counts["Happy"] = (counts["Happy"] || 0) + 1;
+      if (log.mood === "sad") counts["Sad"] = (counts["Sad"] || 0) + 1;
+      if (log.mood === "irritable") counts["Irritable"] = (counts["Irritable"] || 0) + 1;
+      if (log.bloating) counts["Bloating"] = (counts["Bloating"] || 0) + 1;
+      if (log.headache) counts["Headache"] = (counts["Headache"] || 0) + 1;
+      if (log.cravings) counts["Cravings"] = (counts["Cravings"] || 0) + 1;
+      if (log.energy) counts["Energy"] = (counts["Energy"] || 0) + 1;
+      if (log.flow === "light") counts["Light Flow"] = (counts["Light Flow"] || 0) + 1;
+      if (log.flow === "medium") counts["Medium Flow"] = (counts["Medium Flow"] || 0) + 1;
+      if (log.flow === "heavy") counts["Heavy Flow"] = (counts["Heavy Flow"] || 0) + 1;
     });
     return Object.entries(counts)
       .filter(([, v]) => v > 0)
-      .map(([name, count]) => ({ name, count }));
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
   }, [data.logs]);
 
+  const periodDays = data.logs.filter((l) => l.isPeriod).length;
   const hasData = data.cycleStarts.length > 0;
+  const hasSymptomsData = symptomData.length > 0;
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
@@ -66,81 +79,129 @@ function AnalyticsPage() {
         <p className="text-sm text-muted-foreground mt-1">{t.analyticsSubtitle}</p>
       </motion.div>
 
-      {!hasData ? (
+      {/* Stats cards - always visible */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="grid grid-cols-2 gap-3 mb-6"
+      >
+        <div className="card-premium p-5 text-center">
+          <TrendingUp className="w-6 h-6 text-primary mx-auto mb-2" />
+          <p className="text-2xl font-bold text-foreground">{avgLength}</p>
+          <p className="text-[10px] text-muted-foreground">{t.avgCycleLength}</p>
+        </div>
+        <div className="card-premium p-5 text-center">
+          <Calendar className="w-6 h-6 text-primary mx-auto mb-2" />
+          <p className="text-2xl font-bold text-foreground">{data.cycleStarts.length}</p>
+          <p className="text-[10px] text-muted-foreground">{t.totalCyclesLogged}</p>
+        </div>
+        <div className="card-premium p-5 text-center">
+          <Droplets className="w-6 h-6 text-primary mx-auto mb-2" />
+          <p className="text-2xl font-bold text-foreground">{periodDays}</p>
+          <p className="text-[10px] text-muted-foreground">Period Days Logged</p>
+        </div>
+        <div className="card-premium p-5 text-center">
+          <Activity className="w-6 h-6 text-primary mx-auto mb-2" />
+          <p className="text-2xl font-bold text-foreground">{data.logs.length}</p>
+          <p className="text-[10px] text-muted-foreground">Total Entries</p>
+        </div>
+      </motion.div>
+
+      {!hasData && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center py-16"
+          className="card-premium p-8 text-center mb-6"
         >
           <BarChart3 className="w-12 h-12 text-muted-foreground/40 mx-auto mb-4" />
-          <p className="text-muted-foreground">{t.noDataYet}</p>
+          <p className="text-sm text-muted-foreground font-medium mb-1">{t.noDataYet}</p>
+          <p className="text-xs text-muted-foreground/70">
+            Go to the Home page, click on dates to mark your period start days. After logging 2+ cycles, you'll see trend charts here.
+          </p>
         </motion.div>
-      ) : (
-        <div className="space-y-6">
-          {/* Stats cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-2 gap-4"
-          >
-             <div className="card-premium p-5 text-center">
-              <TrendingUp className="w-6 h-6 text-primary mx-auto mb-2" />
-              <p className="text-2xl font-bold text-foreground">{avgLength}</p>
-              <p className="text-xs text-muted-foreground">{t.avgCycleLength}</p>
-            </div>
-            <div className="card-premium p-5 text-center">
-              <Calendar className="w-6 h-6 text-primary mx-auto mb-2" />
-              <p className="text-2xl font-bold text-foreground">{data.cycleStarts.length}</p>
-              <p className="text-xs text-muted-foreground">{t.totalCyclesLogged}</p>
-            </div>
-          </motion.div>
+      )}
 
-          {/* Cycle length trend */}
-          {cycleLengths.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="card-premium p-5"
-            >
-              <h3 className="text-sm font-semibold text-foreground mb-4">{t.cycleLengthTrend}</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <LineChart data={cycleLengths}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-                  <XAxis dataKey="cycle" tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" />
-                  <YAxis tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" domain={["dataMin - 2", "dataMax + 2"]} />
-                  <Tooltip
-                    contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "12px", fontSize: "12px" }}
-                  />
-                  <Line type="monotone" dataKey="days" stroke="var(--primary)" strokeWidth={2.5} dot={{ fill: "var(--primary)", r: 4 }} />
-                </LineChart>
-              </ResponsiveContainer>
-            </motion.div>
-          )}
+      {/* Cycle length trend */}
+      {cycleLengths.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="card-premium p-5 mb-6"
+        >
+          <h3 className="text-sm font-semibold text-foreground mb-4">{t.cycleLengthTrend}</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={cycleLengths}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis dataKey="cycle" tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" />
+              <YAxis tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" domain={["dataMin - 2", "dataMax + 2"]} />
+              <Tooltip
+                contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "12px", fontSize: "12px" }}
+              />
+              <Line type="monotone" dataKey="days" stroke="var(--primary)" strokeWidth={2.5} dot={{ fill: "var(--primary)", r: 4 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </motion.div>
+      )}
 
-          {/* Symptom frequency */}
-          {symptomData.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="card-premium p-5"
-            >
-              <h3 className="text-sm font-semibold text-foreground mb-4">{t.symptomFrequency}</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={symptomData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-                  <XAxis dataKey="name" tick={{ fontSize: 10 }} stroke="var(--muted-foreground)" />
-                  <YAxis tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" />
-                  <Tooltip
-                    contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "12px", fontSize: "12px" }}
-                  />
-                  <Bar dataKey="count" fill="var(--primary)" radius={[6, 6, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </motion.div>
-          )}
-        </div>
+      {/* Symptom frequency */}
+      {hasSymptomsData && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="card-premium p-5 mb-6"
+        >
+          <h3 className="text-sm font-semibold text-foreground mb-4">{t.symptomFrequency}</h3>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={symptomData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis dataKey="name" tick={{ fontSize: 9 }} stroke="var(--muted-foreground)" angle={-35} textAnchor="end" height={60} />
+              <YAxis tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" />
+              <Tooltip
+                contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: "12px", fontSize: "12px" }}
+              />
+              <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                {symptomData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </motion.div>
+      )}
+
+      {/* Symptom distribution pie chart */}
+      {hasSymptomsData && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="card-premium p-5"
+        >
+          <h3 className="text-sm font-semibold text-foreground mb-4">Symptom Distribution</h3>
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart>
+              <Pie
+                data={symptomData.slice(0, 6)}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={80}
+                dataKey="count"
+                nameKey="name"
+                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                labelLine={false}
+                fontSize={10}
+              >
+                {symptomData.slice(0, 6).map((_, index) => (
+                  <Cell key={`pie-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </motion.div>
       )}
     </div>
   );
