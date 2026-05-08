@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TipsRouteImport } from './routes/tips'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as NotesRouteImport } from './routes/notes'
+import { Route as HydrationRouteImport } from './routes/hydration'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -29,6 +31,16 @@ const SettingsRoute = SettingsRouteImport.update({
 const NotesRoute = NotesRouteImport.update({
   id: '/notes',
   path: '/notes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HydrationRoute = HydrationRouteImport.update({
+  id: '/hydration',
+  path: '/hydration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnalyticsRoute = AnalyticsRouteImport.update({
@@ -51,6 +63,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/analytics': typeof AnalyticsRoute
+  '/faq': typeof FaqRoute
+  '/hydration': typeof HydrationRoute
   '/notes': typeof NotesRoute
   '/settings': typeof SettingsRoute
   '/tips': typeof TipsRoute
@@ -59,6 +73,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/analytics': typeof AnalyticsRoute
+  '/faq': typeof FaqRoute
+  '/hydration': typeof HydrationRoute
   '/notes': typeof NotesRoute
   '/settings': typeof SettingsRoute
   '/tips': typeof TipsRoute
@@ -68,20 +84,40 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/analytics': typeof AnalyticsRoute
+  '/faq': typeof FaqRoute
+  '/hydration': typeof HydrationRoute
   '/notes': typeof NotesRoute
   '/settings': typeof SettingsRoute
   '/tips': typeof TipsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/analytics' | '/notes' | '/settings' | '/tips'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/analytics'
+    | '/faq'
+    | '/hydration'
+    | '/notes'
+    | '/settings'
+    | '/tips'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/analytics' | '/notes' | '/settings' | '/tips'
+  to:
+    | '/'
+    | '/about'
+    | '/analytics'
+    | '/faq'
+    | '/hydration'
+    | '/notes'
+    | '/settings'
+    | '/tips'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/analytics'
+    | '/faq'
+    | '/hydration'
     | '/notes'
     | '/settings'
     | '/tips'
@@ -91,6 +127,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AnalyticsRoute: typeof AnalyticsRoute
+  FaqRoute: typeof FaqRoute
+  HydrationRoute: typeof HydrationRoute
   NotesRoute: typeof NotesRoute
   SettingsRoute: typeof SettingsRoute
   TipsRoute: typeof TipsRoute
@@ -117,6 +155,20 @@ declare module '@tanstack/react-router' {
       path: '/notes'
       fullPath: '/notes'
       preLoaderRoute: typeof NotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hydration': {
+      id: '/hydration'
+      path: '/hydration'
+      fullPath: '/hydration'
+      preLoaderRoute: typeof HydrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/analytics': {
@@ -147,6 +199,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AnalyticsRoute: AnalyticsRoute,
+  FaqRoute: FaqRoute,
+  HydrationRoute: HydrationRoute,
   NotesRoute: NotesRoute,
   SettingsRoute: SettingsRoute,
   TipsRoute: TipsRoute,
