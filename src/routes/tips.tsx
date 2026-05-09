@@ -104,7 +104,7 @@ function TipsPage() {
         transition={{ delay: 0.3 }}
         className="mb-8"
       >
-        <h2 className="text-lg font-bold text-foreground mb-4">Understanding Your Cycle</h2>
+        <h2 className="text-lg font-bold text-foreground mb-4">{t.understandingCycle}</h2>
         <div className="space-y-3">
           {cycleInfo.map((info, i) => {
             const Icon = info.icon;
@@ -132,7 +132,7 @@ function TipsPage() {
       </motion.div>
 
       {/* General Health Tips */}
-      <h2 className="text-lg font-bold text-foreground mb-4">General Tips</h2>
+      <h2 className="text-lg font-bold text-foreground mb-4">{t.generalTips}</h2>
       <div className="space-y-4">
         {tips.map((tip, i) => {
           const Icon = tip.icon;
