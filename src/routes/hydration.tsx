@@ -74,8 +74,8 @@ function HydrationPage() {
   return (
     <div className="max-w-lg mx-auto px-4 py-8">
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-foreground">{t.waterReminder || "Hydration"}</h1>
-        <p className="text-sm text-muted-foreground mt-1">Stay hydrated throughout your cycle</p>
+        <h1 className="text-2xl font-bold text-foreground">{t.hydrationTitle}</h1>
+        <p className="text-sm text-muted-foreground mt-1">{t.hydrationSubtitle}</p>
       </motion.div>
 
       {/* Progress Ring */}
@@ -97,7 +97,7 @@ function HydrationPage() {
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <Droplets className="w-8 h-8 text-primary mb-1" />
             <span className="text-3xl font-bold text-foreground">{glasses}</span>
-            <span className="text-xs text-muted-foreground">/ {DAILY_GOAL} glasses</span>
+            <span className="text-xs text-muted-foreground">/ {DAILY_GOAL} {t.glasses}</span>
           </div>
         </div>
 
@@ -122,7 +122,7 @@ function HydrationPage() {
         transition={{ delay: 0.2 }}
         className="card-premium p-5"
       >
-        <h3 className="text-sm font-semibold text-foreground mb-4">This Week</h3>
+        <h3 className="text-sm font-semibold text-foreground mb-4">{t.thisWeek}</h3>
         <div className="flex justify-between items-end gap-2">
           {last7.map((d, i) => (
             <div key={i} className="flex flex-col items-center gap-1.5 flex-1">
@@ -146,13 +146,13 @@ function HydrationPage() {
         transition={{ delay: 0.3 }}
         className="card-premium p-5 mt-4"
       >
-        <h3 className="text-sm font-semibold text-foreground mb-3">💧 Hydration Tips</h3>
+        <h3 className="text-sm font-semibold text-foreground mb-3">💧 {t.hydrationTipsTitle}</h3>
         <ul className="space-y-2 text-xs text-muted-foreground">
-          <li>• Drink at least 8 glasses (2L) of water daily</li>
-          <li>• During your period, increase intake to reduce bloating</li>
-          <li>• Herbal teas count toward your daily goal</li>
-          <li>• Set hourly reminders on your phone</li>
-          <li>• Carry a reusable water bottle everywhere</li>
+          <li>• {t.hydrationTip1}</li>
+          <li>• {t.hydrationTip2}</li>
+          <li>• {t.hydrationTip3}</li>
+          <li>• {t.hydrationTip4}</li>
+          <li>• {t.hydrationTip5}</li>
         </ul>
       </motion.div>
     </div>

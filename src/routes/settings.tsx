@@ -85,7 +85,7 @@ function SettingsPage() {
     {
       icon: darkMode ? Moon : Sun,
       title: t.darkMode,
-      desc: darkMode ? "Dark theme active" : "Light theme active",
+      desc: darkMode ? t.darkThemeActive : t.lightThemeActive,
       action: (
         <button
           onClick={() => setDarkMode(!darkMode)}
@@ -102,7 +102,7 @@ function SettingsPage() {
     {
       icon: Download,
       title: t.exportData,
-      desc: "Download your data as JSON backup",
+      desc: t.exportDesc,
       action: (
         <button onClick={handleExport} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors">
           {t.exportData}
@@ -112,7 +112,7 @@ function SettingsPage() {
     {
       icon: Upload,
       title: t.importData,
-      desc: "Restore from a JSON backup file",
+      desc: t.importDesc,
       action: (
         <button onClick={handleImport} className="px-4 py-2 rounded-xl bg-secondary text-secondary-foreground text-xs font-medium hover:bg-secondary/80 transition-colors">
           {t.importData}
@@ -183,7 +183,7 @@ function SettingsPage() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{t.resetData}</p>
-                <p className="text-[10px] text-muted-foreground">Remove all tracking data</p>
+                <p className="text-[10px] text-muted-foreground">{t.removeAllData}</p>
               </div>
             </div>
             {!showResetConfirm ? (
@@ -196,10 +196,10 @@ function SettingsPage() {
             ) : (
               <div className="flex gap-2">
                 <button onClick={() => setShowResetConfirm(false)} className="px-3 py-2 rounded-xl bg-muted text-muted-foreground text-xs font-medium">
-                  Cancel
+                  {t.cancel}
                 </button>
                 <button onClick={handleReset} className="px-3 py-2 rounded-xl bg-destructive text-destructive-foreground text-xs font-medium">
-                  Confirm
+                  {t.confirm}
                 </button>
               </div>
             )}
