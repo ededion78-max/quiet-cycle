@@ -29,8 +29,8 @@ export function AppSidebar() {
     { title: t.navTips, url: "/tips", icon: Heart },
     { title: t.navAnalytics, url: "/analytics", icon: BarChart3 },
     { title: t.navNotes, url: "/notes", icon: BookOpen },
-    { title: "Hydration", url: "/hydration", icon: Droplets },
-    { title: "FAQ", url: "/faq", icon: HelpCircle },
+    { title: t.navHydration, url: "/hydration", icon: Droplets },
+    { title: t.navFaq, url: "/faq", icon: HelpCircle },
     { title: t.navSettings, url: "/settings", icon: Settings },
     { title: t.navAbout, url: "/about", icon: Info },
   ];
@@ -55,7 +55,7 @@ export function AppSidebar() {
           {/* Navigation */}
           <SidebarGroup>
             <SidebarGroupLabel className="text-[10px] uppercase tracking-widest text-muted-foreground/60 font-semibold">
-              Menu
+              {t.menu}
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
