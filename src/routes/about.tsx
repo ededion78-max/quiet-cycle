@@ -28,14 +28,14 @@ function AboutPage() {
   const { t } = useI18n();
 
   const features = [
-    { icon: Calendar, label: "Cycle Tracking & Predictions" },
-    { icon: Heart, label: "Symptom & Mood Logging" },
-    { icon: BarChart3, label: "Analytics & Insights" },
-    { icon: BookOpen, label: "Health Education" },
-    { icon: Globe, label: "56+ Languages" },
-    { icon: Smartphone, label: "Works Offline" },
-    { icon: Droplets, label: "Hydration Tracker" },
-    { icon: HelpCircle, label: "FAQ & Guides" },
+    { icon: Calendar, label: t.featureCycleTracking },
+    { icon: Heart, label: t.featureSymptomLogging },
+    { icon: BarChart3, label: t.featureAnalytics },
+    { icon: BookOpen, label: t.featureHealthEducation },
+    { icon: Globe, label: t.featureLanguages },
+    { icon: Smartphone, label: t.featureOffline },
+    { icon: Droplets, label: t.featureHydration },
+    { icon: HelpCircle, label: t.featureFaq },
   ];
 
   return (

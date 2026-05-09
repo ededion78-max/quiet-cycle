@@ -46,23 +46,23 @@ function AnalyticsPage() {
   const symptomData = useMemo(() => {
     const counts: Record<string, number> = {};
     data.logs.forEach((log) => {
-      if (log.pain) counts["Pain"] = (counts["Pain"] || 0) + 1;
-      if (log.mood === "happy") counts["Happy"] = (counts["Happy"] || 0) + 1;
-      if (log.mood === "sad") counts["Sad"] = (counts["Sad"] || 0) + 1;
-      if (log.mood === "irritable") counts["Irritable"] = (counts["Irritable"] || 0) + 1;
-      if (log.bloating) counts["Bloating"] = (counts["Bloating"] || 0) + 1;
-      if (log.headache) counts["Headache"] = (counts["Headache"] || 0) + 1;
-      if (log.cravings) counts["Cravings"] = (counts["Cravings"] || 0) + 1;
-      if (log.energy) counts["Energy"] = (counts["Energy"] || 0) + 1;
-      if (log.flow === "light") counts["Light Flow"] = (counts["Light Flow"] || 0) + 1;
-      if (log.flow === "medium") counts["Medium Flow"] = (counts["Medium Flow"] || 0) + 1;
-      if (log.flow === "heavy") counts["Heavy Flow"] = (counts["Heavy Flow"] || 0) + 1;
+      if (log.pain) counts[t.pain] = (counts[t.pain] || 0) + 1;
+      if (log.mood === "happy") counts[t.happy] = (counts[t.happy] || 0) + 1;
+      if (log.mood === "sad") counts[t.sad] = (counts[t.sad] || 0) + 1;
+      if (log.mood === "irritable") counts[t.irritable] = (counts[t.irritable] || 0) + 1;
+      if (log.bloating) counts[t.bloating] = (counts[t.bloating] || 0) + 1;
+      if (log.headache) counts[t.headache] = (counts[t.headache] || 0) + 1;
+      if (log.cravings) counts[t.cravings] = (counts[t.cravings] || 0) + 1;
+      if (log.energy) counts[t.energy] = (counts[t.energy] || 0) + 1;
+      if (log.flow === "light") counts[t.lightFlow] = (counts[t.lightFlow] || 0) + 1;
+      if (log.flow === "medium") counts[t.mediumFlow] = (counts[t.mediumFlow] || 0) + 1;
+      if (log.flow === "heavy") counts[t.heavyFlow] = (counts[t.heavyFlow] || 0) + 1;
     });
     return Object.entries(counts)
       .filter(([, v]) => v > 0)
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
-  }, [data.logs]);
+  }, [data.logs, t]);
 
   const periodDays = data.logs.filter((l) => l.isPeriod).length;
   const hasData = data.cycleStarts.length > 0;
@@ -98,12 +98,12 @@ function AnalyticsPage() {
         <div className="card-premium p-5 text-center">
           <Droplets className="w-6 h-6 text-primary mx-auto mb-2" />
           <p className="text-2xl font-bold text-foreground">{periodDays}</p>
-          <p className="text-[10px] text-muted-foreground">Period Days Logged</p>
+          <p className="text-[10px] text-muted-foreground">{t.periodDaysLogged}</p>
         </div>
         <div className="card-premium p-5 text-center">
           <Activity className="w-6 h-6 text-primary mx-auto mb-2" />
           <p className="text-2xl font-bold text-foreground">{data.logs.length}</p>
-          <p className="text-[10px] text-muted-foreground">Total Entries</p>
+          <p className="text-[10px] text-muted-foreground">{t.totalEntries}</p>
         </div>
       </motion.div>
 
@@ -115,9 +115,7 @@ function AnalyticsPage() {
         >
           <BarChart3 className="w-12 h-12 text-muted-foreground/40 mx-auto mb-4" />
           <p className="text-sm text-muted-foreground font-medium mb-1">{t.noDataYet}</p>
-          <p className="text-xs text-muted-foreground/70">
-            Go to the Home page, click on dates to mark your period start days. After logging 2+ cycles, you'll see trend charts here.
-          </p>
+          <p className="text-xs text-muted-foreground/70">{t.noDataHelp}</p>
         </motion.div>
       )}
 
@@ -179,7 +177,7 @@ function AnalyticsPage() {
           transition={{ delay: 0.3 }}
           className="card-premium p-5"
         >
-          <h3 className="text-sm font-semibold text-foreground mb-4">Symptom Distribution</h3>
+          <h3 className="text-sm font-semibold text-foreground mb-4">{t.symptomDistribution}</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie

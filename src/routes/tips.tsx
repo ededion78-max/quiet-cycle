@@ -20,31 +20,15 @@ export const Route = createFileRoute("/tips")({
   }),
 });
 
-const positions = [
-  {
-    name: "Fetal Position",
-    desc: "Lie on your side with knees pulled up to your chest. This reduces pressure on the abdominal muscles and helps relieve cramps.",
-    img: fetalImg,
-  },
-  {
-    name: "Child's Pose (Balasana)",
-    desc: "Kneel on the floor, sit back on your heels, and stretch your arms forward. This gently stretches the lower back and eases tension.",
-    img: childPoseImg,
-  },
-  {
-    name: "Cat-Cow Stretch",
-    desc: "On your hands and knees, alternate between arching your back (cat) and dropping your belly (cow). Improves flexibility and relieves back pain.",
-    img: catCowImg,
-  },
-  {
-    name: "Supine Twist",
-    desc: "Lie on your back, bring your knees to one side while keeping shoulders flat. This stretches the lower back and relieves bloating.",
-    img: supineTwistImg,
-  },
-];
-
 function TipsPage() {
   const { t } = useI18n();
+
+  const positions = [
+    { name: t.fetalPosition, desc: t.fetalPositionDesc, img: fetalImg },
+    { name: t.childPose, desc: t.childPoseDesc, img: childPoseImg },
+    { name: t.catCowStretch, desc: t.catCowStretchDesc, img: catCowImg },
+    { name: t.supineTwist, desc: t.supineTwistDesc, img: supineTwistImg },
+  ];
 
   const tips = [
     { icon: Flame, title: t.tipsPainRelief, desc: t.tipsPainReliefDesc, color: "bg-destructive/10 text-destructive" },
@@ -57,10 +41,10 @@ function TipsPage() {
   ];
 
   const cycleInfo = [
-    { icon: Clock, title: "Menstrual Phase (Days 1-5)", desc: "Your uterus sheds its lining. You may experience cramps, fatigue, and mood changes. Rest is key. Drink warm liquids and eat iron-rich foods." },
-    { icon: ThermometerSun, title: "Follicular Phase (Days 6-13)", desc: "Estrogen rises, you feel more energetic. Great time for starting new projects, exercising intensely, and socializing. Skin may look better." },
-    { icon: Heart, title: "Ovulation (Day 14)", desc: "An egg is released. You're at peak fertility. Energy and libido are highest. You might notice mild ovulation pain (mittelschmerz) on one side." },
-    { icon: Pill, title: "Luteal Phase (Days 15-28)", desc: "Progesterone rises, PMS symptoms may appear: bloating, mood swings, cravings, breast tenderness. Practice self-care and reduce salt intake." },
+    { icon: Clock, title: t.menstrualPhase, desc: t.menstrualPhaseDesc },
+    { icon: ThermometerSun, title: t.follicularPhase, desc: t.follicularPhaseDesc },
+    { icon: Heart, title: t.ovulationPhase, desc: t.ovulationPhaseDesc },
+    { icon: Pill, title: t.lutealPhase, desc: t.lutealPhaseDesc },
   ];
 
   return (
@@ -120,7 +104,7 @@ function TipsPage() {
         transition={{ delay: 0.3 }}
         className="mb-8"
       >
-        <h2 className="text-lg font-bold text-foreground mb-4">Understanding Your Cycle</h2>
+        <h2 className="text-lg font-bold text-foreground mb-4">{t.understandingCycle}</h2>
         <div className="space-y-3">
           {cycleInfo.map((info, i) => {
             const Icon = info.icon;
@@ -148,7 +132,7 @@ function TipsPage() {
       </motion.div>
 
       {/* General Health Tips */}
-      <h2 className="text-lg font-bold text-foreground mb-4">General Tips</h2>
+      <h2 className="text-lg font-bold text-foreground mb-4">{t.generalTips}</h2>
       <div className="space-y-4">
         {tips.map((tip, i) => {
           const Icon = tip.icon;
