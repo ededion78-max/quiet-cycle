@@ -742,14 +742,16 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 const LANG_STORAGE_KEY = "period-tracker-lang";
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Language>(() => {
-    if (typeof window === "undefined") return "en";
+  // Start with "en" on both server and first client render to avoid hydration mismatch.
+  const [lang, setLangState] = useState<Language>("en");
+
+  // After hydration, load saved language from localStorage.
+  useEffect(() => {
     try {
       const saved = localStorage.getItem(LANG_STORAGE_KEY);
-      if (saved && saved in languageNames) return saved as Language;
+      if (saved && saved in languageNames) setLangState(saved as Language);
     } catch { /* ignore */ }
-    return "en";
-  });
+  }, []);
 
   const setLang = useCallback((l: Language) => {
     setLangState(l);
