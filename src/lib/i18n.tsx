@@ -101,6 +101,31 @@ export type TranslationKeys = {
   faqQ5: string; faqA5: string; faqQ6: string; faqA6: string;
   faqQ7: string; faqA7: string; faqQ8: string; faqA8: string;
   faqQ9: string; faqA9: string; faqQ10: string; faqA10: string;
+  // Auth
+  loginTitle: string; signupTitle: string; cloudSyncDesc: string; password: string;
+  login: string; signup: string; needAccount: string; haveAccount: string;
+  loginSuccess: string; signupSuccess: string; loginRequired: string;
+  // Reminders
+  navReminders: string; remindersTitle: string; remindersSubtitle: string;
+  notifPermAsk: string; enableNotifications: string; notifEnabled: string; notifDenied: string;
+  addPillReminder: string; addCycleReminder: string; daysBeforeCycle: string;
+  pillReminder: string; pillReminderBody: string; cycleReminder: string; cycleReminderBody: string;
+  daysShort: string; noReminders: string; remindersFootnote: string; add: string;
+  // BBT
+  navBbt: string; bbtTitle: string; bbtSubtitle: string; saveTemp: string;
+  bbtChart: string; noBbtYet: string; bbtTip: string;
+  // AI Chat
+  navChat: string; aiChatTitle: string; aiChatSubtitle: string;
+  aiChatPlaceholder: string; aiChatInputPlaceholder: string; aiDisclaimer: string;
+  aiRateLimit: string; aiPaymentRequired: string;
+  // Partner
+  navPartner: string; partnerTitle: string; partnerSubtitle: string;
+  shareYourData: string; viewPartnerData: string; generateCode: string;
+  codeGenerated: string; codeExpiresIn30: string; copy: string; copied: string;
+  regenerate: string; view: string; invalidCode: string; partnerDataLoaded: string;
+  cyclesLogged: string; lastPeriod: string; entries: string; importToDevice: string; imported: string;
+  // Auth nav + PDF
+  navAuth: string; exportPdf: string;
 };
 
 const en: TranslationKeys = {
@@ -207,6 +232,32 @@ const en: TranslationKeys = {
   faqA9: "Tracking helps identify patterns, anticipate PMS, communicate with healthcare providers, and understand how your cycle affects daily life.",
   faqQ10: "Can I use this app for pregnancy planning?",
   faqA10: "Yes. Switch to Pregnancy mode on the home screen — the app highlights your fertile window and ovulation day to help with conception timing.",
+  loginTitle: "Sign In", signupTitle: "Create Account", cloudSyncDesc: "Sync your cycle data across devices", password: "Password",
+  login: "Sign In", signup: "Sign Up", needAccount: "Need an account? Sign up", haveAccount: "Have an account? Sign in",
+  loginSuccess: "Signed in successfully", signupSuccess: "Account created — check your email", loginRequired: "Sign in to use this feature",
+  navReminders: "Reminders", remindersTitle: "Reminders", remindersSubtitle: "Push notifications for your cycle and pills",
+  notifPermAsk: "Enable notifications to receive reminders", enableNotifications: "Enable Notifications",
+  notifEnabled: "Notifications enabled", notifDenied: "Permission denied",
+  addPillReminder: "Pill Reminder", addCycleReminder: "Cycle Reminder", daysBeforeCycle: "days before next cycle",
+  pillReminder: "Pill Reminder", pillReminderBody: "Time to take your contraceptive pill",
+  cycleReminder: "Cycle Reminder", cycleReminderBody: "Your cycle starts in {n} days",
+  daysShort: "d", noReminders: "No reminders yet", remindersFootnote: "Notifications work while the app is open. For background notifications use the Android/iOS build.",
+  add: "Add",
+  navBbt: "BBT", bbtTitle: "Basal Body Temperature", bbtSubtitle: "Track your morning temperature to detect ovulation",
+  saveTemp: "Save Temperature", bbtChart: "Last 30 days", noBbtYet: "No measurements yet",
+  bbtTip: "Measure right after waking, before any activity. A rise of 0.2-0.5°C signals ovulation.",
+  navChat: "AI Chat", aiChatTitle: "Health AI Assistant", aiChatSubtitle: "Ask questions about your cycle, hormones, fertility",
+  aiChatPlaceholder: "Try: \"Why am I bloated before my period?\" or \"What does PCOS mean?\"",
+  aiChatInputPlaceholder: "Type your question...",
+  aiDisclaimer: "AI is not a substitute for medical advice. Consult a doctor for diagnoses.",
+  aiRateLimit: "Too many requests. Please wait a moment.", aiPaymentRequired: "AI credits exhausted. Add credits in Workspace.",
+  navPartner: "Partner", partnerTitle: "Partner Sharing", partnerSubtitle: "Share your cycle data with your partner",
+  shareYourData: "Share Your Data", viewPartnerData: "View Partner's Data", generateCode: "Generate Share Code",
+  codeGenerated: "Code generated", codeExpiresIn30: "Expires in 30 days", copy: "Copy", copied: "Copied!",
+  regenerate: "New Code", view: "View", invalidCode: "Invalid or expired code", partnerDataLoaded: "Partner data loaded",
+  cyclesLogged: "Cycles", lastPeriod: "Last period", entries: "Entries",
+  importToDevice: "Import to my device", imported: "Imported successfully",
+  navAuth: "Sign In", exportPdf: "Export PDF Report",
 };
 
 const sq: TranslationKeys = {
@@ -313,6 +364,32 @@ const sq: TranslationKeys = {
   faqA9: "Gjurmimi ndihmon të identifikosh modele, të parashikosh PMS, të komunikosh me mjekun dhe të kuptosh si ndikon cikli në jetën e përditshme.",
   faqQ10: "A mund ta përdor këtë aplikacion për planifikim shtatzënie?",
   faqA10: "Po. Kalo në modin Shtatzëni në kryefaqe — aplikacioni thekson dritaren fertile dhe ditën e ovulimit për të të ndihmuar me momentin e konceptimit.",
+  loginTitle: "Hyr", signupTitle: "Krijo Llogari", cloudSyncDesc: "Sinkronizo të dhënat e ciklit midis pajisjeve", password: "Fjalëkalimi",
+  login: "Hyr", signup: "Regjistrohu", needAccount: "Nuk ke llogari? Regjistrohu", haveAccount: "Ke llogari? Hyr",
+  loginSuccess: "U identifikove me sukses", signupSuccess: "Llogaria u krijua — kontrollo emailin", loginRequired: "Identifikohu për të përdorur këtë funksion",
+  navReminders: "Kujtesa", remindersTitle: "Kujtesat", remindersSubtitle: "Njoftime push për ciklin dhe pilulat",
+  notifPermAsk: "Aktivizo njoftimet për të marrë kujtesa", enableNotifications: "Aktivizo Njoftimet",
+  notifEnabled: "Njoftimet u aktivizuan", notifDenied: "Leja u refuzua",
+  addPillReminder: "Kujtesë Pilule", addCycleReminder: "Kujtesë Cikli", daysBeforeCycle: "ditë para ciklit tjetër",
+  pillReminder: "Kujtesë Pilule", pillReminderBody: "Koha për të marrë pilulën kontraceptive",
+  cycleReminder: "Kujtesë Cikli", cycleReminderBody: "Cikli yt fillon për {n} ditë",
+  daysShort: "d", noReminders: "Asnjë kujtesë ende", remindersFootnote: "Njoftimet funksionojnë kur aplikacioni është i hapur. Për njoftime në sfond përdor build-in Android/iOS.",
+  add: "Shto",
+  navBbt: "BBT", bbtTitle: "Temperatura Bazale (BBT)", bbtSubtitle: "Gjurmo temperaturën e mëngjesit për të zbuluar ovulimin",
+  saveTemp: "Ruaj Temperaturën", bbtChart: "30 ditët e fundit", noBbtYet: "Asnjë matje ende",
+  bbtTip: "Mate menjëherë pas zgjimit, para çdo aktiviteti. Një rritje 0.2-0.5°C tregon ovulimin.",
+  navChat: "Chat AI", aiChatTitle: "Asistent AI për Shëndetin", aiChatSubtitle: "Bëj pyetje për ciklin, hormonet, fertilitetin",
+  aiChatPlaceholder: "Provo: \"Pse fryhem para periodës?\" ose \"Çfarë do të thotë PCOS?\"",
+  aiChatInputPlaceholder: "Shkruaj pyetjen tënde...",
+  aiDisclaimer: "AI nuk zëvendëson këshillën mjekësore. Konsulto mjekun për diagnoza.",
+  aiRateLimit: "Shumë kërkesa. Prit pak.", aiPaymentRequired: "Kreditë AI mbaruan. Shto kredi te Workspace.",
+  navPartner: "Partneri", partnerTitle: "Ndarja me Partnerin", partnerSubtitle: "Ndaje ciklin tënd me partnerin",
+  shareYourData: "Ndaj të Dhënat e Tua", viewPartnerData: "Shiko të Dhënat e Partneres", generateCode: "Gjenero Kod Ndarje",
+  codeGenerated: "Kodi u gjenerua", codeExpiresIn30: "Skadon për 30 ditë", copy: "Kopjo", copied: "U kopjua!",
+  regenerate: "Kod i Ri", view: "Shiko", invalidCode: "Kod i pavlefshëm ose i skaduar", partnerDataLoaded: "Të dhënat u ngarkuan",
+  cyclesLogged: "Cikle", lastPeriod: "Perioda e fundit", entries: "Hyrje",
+  importToDevice: "Importo në pajisjen time", imported: "U importua me sukses",
+  navAuth: "Hyr", exportPdf: "Eksporto Raportin PDF",
 };
 
 // Other languages: keep partial translations; missing keys fall back to English.

@@ -11,9 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TipsRouteImport } from './routes/tips'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RemindersRouteImport } from './routes/reminders'
+import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as NotesRouteImport } from './routes/notes'
 import { Route as HydrationRouteImport } from './routes/hydration'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ChatRouteImport } from './routes/chat'
+import { Route as BbtRouteImport } from './routes/bbt'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -26,6 +31,16 @@ const TipsRoute = TipsRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RemindersRoute = RemindersRouteImport.update({
+  id: '/reminders',
+  path: '/reminders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerRoute = PartnerRouteImport.update({
+  id: '/partner',
+  path: '/partner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NotesRoute = NotesRouteImport.update({
@@ -41,6 +56,21 @@ const HydrationRoute = HydrationRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BbtRoute = BbtRouteImport.update({
+  id: '/bbt',
+  path: '/bbt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnalyticsRoute = AnalyticsRouteImport.update({
@@ -63,9 +93,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
+  '/bbt': typeof BbtRoute
+  '/chat': typeof ChatRoute
   '/faq': typeof FaqRoute
   '/hydration': typeof HydrationRoute
   '/notes': typeof NotesRoute
+  '/partner': typeof PartnerRoute
+  '/reminders': typeof RemindersRoute
   '/settings': typeof SettingsRoute
   '/tips': typeof TipsRoute
 }
@@ -73,9 +108,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
+  '/bbt': typeof BbtRoute
+  '/chat': typeof ChatRoute
   '/faq': typeof FaqRoute
   '/hydration': typeof HydrationRoute
   '/notes': typeof NotesRoute
+  '/partner': typeof PartnerRoute
+  '/reminders': typeof RemindersRoute
   '/settings': typeof SettingsRoute
   '/tips': typeof TipsRoute
 }
@@ -84,9 +124,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
+  '/bbt': typeof BbtRoute
+  '/chat': typeof ChatRoute
   '/faq': typeof FaqRoute
   '/hydration': typeof HydrationRoute
   '/notes': typeof NotesRoute
+  '/partner': typeof PartnerRoute
+  '/reminders': typeof RemindersRoute
   '/settings': typeof SettingsRoute
   '/tips': typeof TipsRoute
 }
@@ -96,9 +141,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/analytics'
+    | '/auth'
+    | '/bbt'
+    | '/chat'
     | '/faq'
     | '/hydration'
     | '/notes'
+    | '/partner'
+    | '/reminders'
     | '/settings'
     | '/tips'
   fileRoutesByTo: FileRoutesByTo
@@ -106,9 +156,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/analytics'
+    | '/auth'
+    | '/bbt'
+    | '/chat'
     | '/faq'
     | '/hydration'
     | '/notes'
+    | '/partner'
+    | '/reminders'
     | '/settings'
     | '/tips'
   id:
@@ -116,9 +171,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/analytics'
+    | '/auth'
+    | '/bbt'
+    | '/chat'
     | '/faq'
     | '/hydration'
     | '/notes'
+    | '/partner'
+    | '/reminders'
     | '/settings'
     | '/tips'
   fileRoutesById: FileRoutesById
@@ -127,9 +187,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AnalyticsRoute: typeof AnalyticsRoute
+  AuthRoute: typeof AuthRoute
+  BbtRoute: typeof BbtRoute
+  ChatRoute: typeof ChatRoute
   FaqRoute: typeof FaqRoute
   HydrationRoute: typeof HydrationRoute
   NotesRoute: typeof NotesRoute
+  PartnerRoute: typeof PartnerRoute
+  RemindersRoute: typeof RemindersRoute
   SettingsRoute: typeof SettingsRoute
   TipsRoute: typeof TipsRoute
 }
@@ -148,6 +213,20 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reminders': {
+      id: '/reminders'
+      path: '/reminders'
+      fullPath: '/reminders'
+      preLoaderRoute: typeof RemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner': {
+      id: '/partner'
+      path: '/partner'
+      fullPath: '/partner'
+      preLoaderRoute: typeof PartnerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notes': {
@@ -169,6 +248,27 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bbt': {
+      id: '/bbt'
+      path: '/bbt'
+      fullPath: '/bbt'
+      preLoaderRoute: typeof BbtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/analytics': {
@@ -199,9 +299,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AnalyticsRoute: AnalyticsRoute,
+  AuthRoute: AuthRoute,
+  BbtRoute: BbtRoute,
+  ChatRoute: ChatRoute,
   FaqRoute: FaqRoute,
   HydrationRoute: HydrationRoute,
   NotesRoute: NotesRoute,
+  PartnerRoute: PartnerRoute,
+  RemindersRoute: RemindersRoute,
   SettingsRoute: SettingsRoute,
   TipsRoute: TipsRoute,
 }

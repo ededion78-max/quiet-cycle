@@ -4,7 +4,8 @@
 
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
-  Home, Heart, BarChart3, BookOpen, Info, Globe, Flower2, Settings, Droplets, HelpCircle,
+  Home, Heart, BarChart3, BookOpen, Info, Globe, Settings, Droplets, HelpCircle,
+  Bell, Thermometer, Bot, Users, LogIn,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -28,8 +29,13 @@ export function AppSidebar() {
     { title: t.navHome, url: "/", icon: Home },
     { title: t.navTips, url: "/tips", icon: Heart },
     { title: t.navAnalytics, url: "/analytics", icon: BarChart3 },
+    { title: t.navReminders, url: "/reminders", icon: Bell },
+    { title: t.navBbt, url: "/bbt", icon: Thermometer },
+    { title: t.navChat, url: "/chat", icon: Bot },
+    { title: t.navPartner, url: "/partner", icon: Users },
     { title: t.navNotes, url: "/notes", icon: BookOpen },
     { title: t.navHydration, url: "/hydration", icon: Droplets },
+    { title: t.navAuth, url: "/auth", icon: LogIn },
     { title: t.navFaq, url: "/faq", icon: HelpCircle },
     { title: t.navSettings, url: "/settings", icon: Settings },
     { title: t.navAbout, url: "/about", icon: Info },
