@@ -101,6 +101,31 @@ export type TranslationKeys = {
   faqQ5: string; faqA5: string; faqQ6: string; faqA6: string;
   faqQ7: string; faqA7: string; faqQ8: string; faqA8: string;
   faqQ9: string; faqA9: string; faqQ10: string; faqA10: string;
+  // Auth
+  loginTitle: string; signupTitle: string; cloudSyncDesc: string; password: string;
+  login: string; signup: string; needAccount: string; haveAccount: string;
+  loginSuccess: string; signupSuccess: string; loginRequired: string;
+  // Reminders
+  navReminders: string; remindersTitle: string; remindersSubtitle: string;
+  notifPermAsk: string; enableNotifications: string; notifEnabled: string; notifDenied: string;
+  addPillReminder: string; addCycleReminder: string; daysBeforeCycle: string;
+  pillReminder: string; pillReminderBody: string; cycleReminder: string; cycleReminderBody: string;
+  daysShort: string; noReminders: string; remindersFootnote: string; add: string;
+  // BBT
+  navBbt: string; bbtTitle: string; bbtSubtitle: string; saveTemp: string;
+  bbtChart: string; noBbtYet: string; bbtTip: string;
+  // AI Chat
+  navChat: string; aiChatTitle: string; aiChatSubtitle: string;
+  aiChatPlaceholder: string; aiChatInputPlaceholder: string; aiDisclaimer: string;
+  aiRateLimit: string; aiPaymentRequired: string;
+  // Partner
+  navPartner: string; partnerTitle: string; partnerSubtitle: string;
+  shareYourData: string; viewPartnerData: string; generateCode: string;
+  codeGenerated: string; codeExpiresIn30: string; copy: string; copied: string;
+  regenerate: string; view: string; invalidCode: string; partnerDataLoaded: string;
+  cyclesLogged: string; lastPeriod: string; entries: string; importToDevice: string; imported: string;
+  // Auth nav + PDF
+  navAuth: string; exportPdf: string;
 };
 
 const en: TranslationKeys = {
