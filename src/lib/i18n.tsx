@@ -3,7 +3,7 @@
  * Uses English as base; missing keys fall back to English automatically.
  */
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 
 export type Language =
   | "en" | "sq" | "es" | "fr" | "de" | "tr" | "it" | "pt" | "nl" | "pl"
