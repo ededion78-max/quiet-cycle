@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
-import { BarChart3, TrendingUp, Calendar, Activity, Droplets } from "lucide-react";
+import { BarChart3, TrendingUp, Calendar, Activity, Droplets, FileDown } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, format } from "date-fns";
+import jsPDF from "jspdf";
 import { useI18n } from "@/lib/i18n";
 import { loadData, type CycleData } from "@/lib/period-tracker";
 
@@ -77,6 +78,29 @@ function AnalyticsPage() {
       >
         <h1 className="text-2xl font-bold text-foreground">{t.analyticsTitle}</h1>
         <p className="text-sm text-muted-foreground mt-1">{t.analyticsSubtitle}</p>
+        <button
+          onClick={() => {
+            const doc = new jsPDF();
+            doc.setFontSize(18); doc.text("My Cycle - " + t.analyticsTitle, 14, 18);
+            doc.setFontSize(10); doc.text(format(new Date(), "yyyy-MM-dd"), 14, 26);
+            doc.setFontSize(12);
+            let y = 40;
+            doc.text(`${t.avgCycleLength}: ${avgLength}`, 14, y); y += 8;
+            doc.text(`${t.totalCyclesLogged}: ${data.cycleStarts.length}`, 14, y); y += 8;
+            doc.text(`${t.periodDaysLogged}: ${periodDays}`, 14, y); y += 8;
+            doc.text(`${t.totalEntries}: ${data.logs.length}`, 14, y); y += 12;
+            doc.setFontSize(13); doc.text(t.symptomFrequency, 14, y); y += 8;
+            doc.setFontSize(11);
+            symptomData.forEach((s) => { doc.text(`- ${s.name}: ${s.count}`, 18, y); y += 6; });
+            y += 4; doc.setFontSize(13); doc.text(t.cycleLengthTrend, 14, y); y += 8;
+            doc.setFontSize(11);
+            cycleLengths.forEach((c) => { doc.text(`#${c.cycle}: ${c.days} ${t.days}`, 18, y); y += 6; });
+            doc.save(`my-cycle-report-${format(new Date(), "yyyy-MM-dd")}.pdf`);
+          }}
+          className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl gradient-primary text-primary-foreground text-xs font-semibold shadow-lg shadow-primary/20"
+        >
+          <FileDown className="w-4 h-4" /> {t.exportPdf}
+        </button>
       </motion.div>
 
       {/* Stats cards - always visible */}
